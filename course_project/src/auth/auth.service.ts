@@ -5,6 +5,7 @@ import {User} from "../users/users.model";
 import {UsersService} from "../users/users.service";
 import * as bcrypt from "bcryptjs";
 import {JwtService} from "@nestjs/jwt";
+import {DtoLoginDto} from "../users/dto/dto-login.dto";
 
 @Injectable()
 export class AuthService {
@@ -20,12 +21,12 @@ export class AuthService {
 
 
 
-    async login( userDto:CreateUserDto) {
+    async login( userDto:DtoLoginDto) {
         const user=await this.validateUser(userDto);
         return this.generateToken(user);
     }
 
-    private async validateUser(userDto:CreateUserDto)
+    private async validateUser(userDto:DtoLoginDto)
     {
         const user=await this.usersService.getUserByEmail(userDto.email);
         if(!user) {
@@ -45,6 +46,7 @@ export class AuthService {
         if(candidate){
             throw new HttpException('User with this email exists',HttpStatus.BAD_REQUEST)
         }
+
         if(!userDto.fio || !userDto.phone_number){
             throw new HttpException('Not all fields are filled',HttpStatus.BAD_REQUEST)
         }

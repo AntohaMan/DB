@@ -9,11 +9,12 @@ import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './services/services.module';
 import { StaffModule } from './staff/staff.module';
 import { OrdersModule } from './orders/orders.module';
-import { OrderContentModule } from './order-content/order-content.module';
 import {Orders} from "./orders/orders.model";
 import {Staff} from "./staff/staff.model";
 import {Services} from "./services/services.model";
-import {OrderContent} from "./order-content/order-content.model";
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import path from "path";
 
 
 
@@ -22,6 +23,8 @@ import {OrderContent} from "./order-content/order-content.model";
     providers:[],
     imports: [ConfigModule.forRoot({
         envFilePath:`.${process.env.NODE_ENV}.env`
+    }),ServeStaticModule.forRoot({
+        rootPath: join(__dirname, '..', 'dist/static'),
     }),
         TypeOrmModule.forRoot({
         type: 'postgres',
@@ -30,9 +33,9 @@ import {OrderContent} from "./order-content/order-content.model";
         username:  process.env.POSTGRES_USER,
         password:  process.env.POSTGRES_PASSWORD,
         database:  process.env.POSTGRES_DB,
-        entities: [User,Role,Orders,Staff,Services,OrderContent],
+        entities: [User,Role,Orders,Staff,Services],
         synchronize:true,
         autoLoadEntities:true
-    }),UsersModule, RolesModule, AuthModule, ServicesModule, StaffModule, OrdersModule, OrderContentModule]
+    }),UsersModule, RolesModule, AuthModule, ServicesModule, StaffModule, OrdersModule]
 })
 export class AppModule{}

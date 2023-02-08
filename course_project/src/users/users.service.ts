@@ -57,6 +57,14 @@ export class UsersService {
 
     }
 
+    async delUser(id:number){
+        const delUser=await this.usersRepository.findOneBy({id:id})
+        if(!delUser){throw new UnauthorizedException({message:'incorrect data'})}
+        await this.usersRepository.remove(delUser);
+        return {message:"deleted user"};
+
+    }
+
     async ban(dto: BanUserDto) {
         const user=await this.usersRepository.findOne({where:{id:dto.userId}})
         if(!user){

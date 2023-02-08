@@ -2,7 +2,7 @@ import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn
 import {ApiProperty} from "@nestjs/swagger";
 import {Role} from "../roles/roles.model";
 import {Orders} from "../orders/orders.model";
-import {OrderContent} from "../order-content/order-content.model";
+
 
 
 @Entity("staff")
@@ -16,15 +16,15 @@ export class Staff {
     fio:string;
 
     @ApiProperty({example:'2001-03-12',description:'staff birthday'})
-    @Column({type: 'date',nullable:false})
+    @Column({type: 'date',nullable:false,select:false})
     birthday:Date;
 
     @ApiProperty({example:'+375299321112',description:' staff phone number'})
-    @Column({unique:true,nullable:false})
+    @Column({unique:true,nullable:false,select:false})
     phone: string;
 
     @ApiProperty({example:'yuiy9',description:'staff photo'})
-    @Column({nullable:false})
+    @Column({nullable:true})
     photo: string;
 
     @ApiProperty({example:'electrician',description:'staff specialization'})
@@ -32,8 +32,8 @@ export class Staff {
     specialization: string;
 
 
-    @OneToMany(() => OrderContent, (order_content) => order_content.staff)
-    order_content: OrderContent[]
+    @OneToMany(() => Orders, (orders) => orders.staff)
+    orders: Orders[]
 
 
 

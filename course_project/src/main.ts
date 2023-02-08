@@ -2,7 +2,8 @@ import {NestFactory} from "@nestjs/core";
 import {AppModule} from "./app.module";
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import {ValidationPipe} from "./pipes/validation.pipe";
-
+import * as express from 'express';
+import {join} from "path";
 
 async function start(){
     const PORT=process.env.PORT || 3000;
@@ -17,6 +18,10 @@ async function start(){
     const documet = SwaggerModule.createDocument(app,config);
     SwaggerModule.setup('/api/docs',app,documet);
     app.useGlobalPipes(new ValidationPipe())
+    app.setGlobalPrefix('api')
+    app.enableCors();
+
+
     await app.listen(PORT,()=>console.log(`Server started on PORT = ${PORT}`));
 }
 start();

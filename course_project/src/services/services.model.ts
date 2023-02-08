@@ -2,7 +2,7 @@ import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn
 import {ApiProperty} from "@nestjs/swagger";
 import {Role} from "../roles/roles.model";
 import {Orders} from "../orders/orders.model";
-import {OrderContent} from "../order-content/order-content.model";
+
 
 
 @Entity("services")
@@ -28,8 +28,8 @@ export class Services {
     description: string;
 
 
-    @OneToMany(() => OrderContent, (order_content) => order_content.services)
-    order_content: OrderContent[]
+    @OneToMany(() => Orders, (orders) => orders.services)
+    orders: Orders[]
 
 
 

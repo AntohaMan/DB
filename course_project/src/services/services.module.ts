@@ -2,13 +2,15 @@ import { Module } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { ServicesController } from './services.controller';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {Role} from "../roles/roles.model";
-import {User} from "../users/users.model";
-import {OrderContent} from "../order-content/order-content.model";
+import {UsersModule} from "../users/users.module";
+import {AuthModule} from "../auth/auth.module";
+import {Services} from "./services.model";
+import {Orders} from "../orders/orders.model";
 
 @Module({
   providers: [ServicesService],
   controllers: [ServicesController],
-  imports:[TypeOrmModule.forFeature([OrderContent])],
+  imports:[TypeOrmModule.forFeature([Orders,Services]),UsersModule,AuthModule],
+  exports:[ServicesService]
 })
 export class ServicesModule {}
