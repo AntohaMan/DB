@@ -24,7 +24,7 @@ import path from "path";
     imports: [ConfigModule.forRoot({
         envFilePath:`.${process.env.NODE_ENV}.env`
     }),ServeStaticModule.forRoot({
-        rootPath: join(__dirname, '..', 'dist/static'),
+        rootPath: join(__dirname, '..', '/dist/static'),
     }),
         TypeOrmModule.forRoot({
         type: 'postgres',
